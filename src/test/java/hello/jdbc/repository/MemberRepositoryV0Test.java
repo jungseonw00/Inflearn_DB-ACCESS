@@ -1,6 +1,5 @@
 package hello.jdbc.repository;
 
-import hello.jdbc.domain.Mem;
 import hello.jdbc.domain.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -45,8 +44,6 @@ class MemberRepositoryV0Test {
         Member memberA = new Member("A", 10);
         Member memberB = new Member("A", 10);
         Member memberC = new Member("C", 10);
-        Mem    mem     = new Mem("A", 10);
-        System.out.println(memberA.equals(mem));
         System.out.println(memberA.hashCode());
         System.out.println(memberB.hashCode());
         System.out.println("memberC = " + memberC.hashCode());
