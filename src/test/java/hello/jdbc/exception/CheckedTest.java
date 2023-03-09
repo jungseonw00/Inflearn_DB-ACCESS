@@ -1,15 +1,32 @@
 package hello.jdbc.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class CheckedTest {
 
+    /**
+     *  실행 흐름
+     *  1. Service Class 생성
+     *  2. Service Class내에 Repository 생성
+     *  3. Repository의 기본 생성자 호출
+     *  4. Service의 callCatch()가 repository의 call() 호출
+     *  5. Repository의 call()은 checkedException 발생
+     *  6. Service의 Catch문에 잡히고 정상 진행
+     */
     @Test
     void checked_catch() {
         Service service = new Service();
         service.callCatch();
+    }
+
+    @Test
+    void checked_throw() throws MyCheckedException {
+        Service service = new Service();
+        Assertions.assertThatThrownBy(() -> service.callThrow())
+            .isInstanceOf(MyCheckedException.class);
     }
 
     /**
@@ -41,6 +58,11 @@ public class CheckedTest {
             }
         }
 
+        /**
+         * 체크 예외를 밖으로 던지는 코드
+         * 체크 예외는 예외를 잡지 않고 밖으로 던지려면 throws 예외를 메서드에 필수로 선언해야한다.
+         * @throws MyCheckedException
+         */
         public void callThrow() throws MyCheckedException {
             repository.call();
         }
